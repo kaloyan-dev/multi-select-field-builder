@@ -12,4 +12,22 @@ const toCamelCase = (text?: string) => {
     .join("");
 };
 
-export { toCamelCase };
+const storageGet = (key: string) => {
+  const item = localStorage.getItem(key);
+
+  if (!item) {
+    return null;
+  }
+
+  return JSON.parse(item);
+};
+
+const storageSet = (key: string, value: Record<string, unknown>) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+
+const storageClean = (key: string) => {
+  localStorage.removeItem(key);
+};
+
+export { toCamelCase, storageGet, storageSet, storageClean };

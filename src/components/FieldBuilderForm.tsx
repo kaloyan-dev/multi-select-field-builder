@@ -1,14 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
 import { ChoicesList, FormContainer, FormRow, FormTitle } from "@/components";
+import { storageGet, storageSet, storageClean } from "@/utils";
 import { FormBuilderFormProps } from "@/types";
 
 const FieldBuilderForm = ({ title }: FormBuilderFormProps) => {
-  const [label, setLabel] = useState("");
-  const [required, setRequired] = useState(false);
-  const [defaultValue, setDefaultValue] = useState("");
-  const [choices, setChoices] = useState<string[]>([]);
-  const [order, setOrder] = useState("custom");
+  const storageData = storageGet("fieldBuilderFormData");
+
+  const [label, setLabel] = useState(storageData?.label || "");
+  const [required, setRequired] = useState(storageData?.required || false);
+  const [defaultValue, setDefaultValue] = useState(storageData?.default || "");
+  const [choices, setChoices] = useState<string[]>(storageData?.choices || []);
+  const [order, setOrder] = useState(
+    storageData?.alpha ? "alphabetical" : "custom"
+  );
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
+
+  useEffect(() => {
+    storageSet("fieldBuilderFormData", {
+      label,
+      required,
+      default: defaultValue,
+      choices,
+      alpha: "alphabetical" === order,
+    });
+  }, [label, required, defaultValue, choices, order]);
 
   const handleSubmit = (formData: {
     label: string;
@@ -77,6 +92,8 @@ const FieldBuilderForm = ({ title }: FormBuilderFormProps) => {
     setChoices([]);
     setOrder("custom");
     setValidationErrors([]);
+
+    storageClean("fieldBuilderFormData");
   };
 
   const saveField = async (data: {
