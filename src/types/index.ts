@@ -46,6 +46,7 @@ type IconProps = {
 
 export type {
   ChoiceRowProps,
+  FormData,
   IconProps,
   FormBuilderFormProps,
   FormContainerProps,

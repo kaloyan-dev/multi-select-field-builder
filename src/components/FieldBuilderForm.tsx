@@ -49,12 +49,25 @@ const FieldBuilderForm = ({ title }: FormBuilderFormProps) => {
       return;
     }
 
+    const newChoices = [...formData.choices];
+
     if (
       formData.defaultValue &&
       !formData.choices.includes(formData.defaultValue)
     ) {
-      setChoices([...formData.choices, formData.defaultValue]);
+      newChoices.push(formData.defaultValue);
+      setChoices(newChoices);
     }
+
+    const submitData = {
+      label: formData.label,
+      required: formData.required,
+      default: formData.defaultValue,
+      choices: newChoices,
+      displayAlpha: formData.order === "alphabetical",
+    };
+
+    saveField(submitData);
   };
 
   const handleReset = () => {
@@ -66,8 +79,36 @@ const FieldBuilderForm = ({ title }: FormBuilderFormProps) => {
     setValidationErrors([]);
   };
 
+  const saveField = async (data: {
+    label: string;
+    required: boolean;
+    default: string;
+    choices: string[];
+    displayAlpha: boolean;
+  }) => {
+    try {
+      console.log("Post data:", data);
+
+      const response = await fetch(
+        "https://68f11c040b966ad500356939.mockapi.io/field",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      const result = await response.text();
+      console.log("MockAPI Response:", result);
+    } catch (error) {
+      console.error("Error posting data:", error);
+    }
+  };
+
   return (
-    <div className="m-8 border border-gray-300 overflow-hidden">
+    <div className="m-4 border border-gray-300 overflow-hidden">
       <FormTitle title={title} />
       <FormContainer
         formData={{ label, required, defaultValue, choices, order }}
@@ -92,7 +133,7 @@ const FieldBuilderForm = ({ title }: FormBuilderFormProps) => {
             >
               Multi-select
             </span>
-            <label className="select-none">
+            <label className="select-none !font-normal">
               <input
                 type="checkbox"
                 checked={required}
@@ -133,9 +174,6 @@ const FieldBuilderForm = ({ title }: FormBuilderFormProps) => {
             <option value="custom">Display choices in custom order</option>
             <option value="alphabetical">
               Display choices in alphabetical order
-            </option>
-            <option value="reverse-alphabetical">
-              Display choices in reverse alphabetical order
             </option>
           </select>
         </FormRow>

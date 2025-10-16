@@ -20,9 +20,9 @@ const FormRow = ({
     );
 
     return hint ? (
-      <div className="w-[200px] flex-shrink-0 pr-5">
+      <div className="flex-shrink-0 md:w-[200px] md:pr-5">
         {LabelOnly}
-        <p className="text-xs text-gray-500 pt-2">{hint}</p>
+        <p className="text-xs text-gray-500 pt-2 pb-4 md:pb-0">{hint}</p>
       </div>
     ) : (
       LabelOnly

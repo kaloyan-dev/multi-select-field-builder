@@ -12,11 +12,11 @@ select {
 }
 
 .form-row {
-  @apply flex items-center justify-start p-4;
+  @apply md:flex items-center justify-start p-4;
 }
 
 .form-row label {
-  @apply inline-block font-medium text-gray-700 w-[200px] flex-shrink-0;
+  @apply inline-block font-medium text-gray-700 md:w-[200px] flex-shrink-0 mb-2 md:mb-0;
 }
 
 .form-row + .form-row {
