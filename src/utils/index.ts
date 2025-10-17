@@ -4,10 +4,12 @@ const toCamelCase = (text?: string) => {
   }
 
   return text
-    .toLowerCase()
-    .split(" ")
+    .trim()
+    .split(/\s+/)
     .map((word, index) =>
-      index === 0 ? word : word[0].toUpperCase() + word.slice(1)
+      index === 0
+        ? word.toLowerCase()
+        : word[0].toUpperCase() + word.slice(1).toLowerCase()
     )
     .join("");
 };

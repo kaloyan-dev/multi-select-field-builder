@@ -1,3 +1,8 @@
+type ChoicesListProps = {
+  choices: string[];
+  setChoices: (choices: string[]) => void;
+};
+
 type ChoiceRowProps = {
   choice: string;
   index: number;
@@ -45,6 +50,7 @@ type IconProps = {
 };
 
 export type {
+  ChoicesListProps,
   ChoiceRowProps,
   IconProps,
   FormBuilderFormProps,

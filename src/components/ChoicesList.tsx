@@ -1,11 +1,6 @@
 import { useRef, useEffect, useState } from "react";
-import ChoiceRow from "@/components/ChoiceRow";
-import Icon from "@/components/Icon";
-
-type ChoicesListProps = {
-  choices: string[];
-  setChoices: (choices: string[]) => void;
-};
+import { ChoiceRow, Icon } from "@/components";
+import { ChoicesListProps } from "@/types";
 
 const ChoicesList: React.FC<ChoicesListProps> = ({ choices, setChoices }) => {
   const lastChoicesLength = useRef(choices.length);
@@ -20,11 +15,9 @@ const ChoicesList: React.FC<ChoicesListProps> = ({ choices, setChoices }) => {
 
   useEffect(() => {
     if (choices.length > lastChoicesLength.current) {
-      // A new choice was added
       setLastAddedIndex(choices.length - 1);
       lastChoicesLength.current = choices.length;
     } else if (choices.length < lastChoicesLength.current) {
-      // A choice was deleted
       lastChoicesLength.current = choices.length;
       setLastAddedIndex(null);
     }
@@ -43,7 +36,6 @@ const ChoicesList: React.FC<ChoicesListProps> = ({ choices, setChoices }) => {
             const updated = [...choices];
             updated[index] = value;
             setChoices(updated);
-            // Clear the focus after the user starts typing
             if (index === lastAddedIndex) {
               setLastAddedIndex(null);
             }
