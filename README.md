@@ -1,75 +1,39 @@
-# React + TypeScript + Vite
+# Multi-Select Field Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+#### Preview: https://multi-select-field-builder.vercel.app/
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Local Installation
 
-## React Compiler
+- clone the repo
+- run `npm install`
+- then run `npm run dev`
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+For unit tests run `npm test`.
 
-Note: This will impact Vite dev & build performances.
+---
 
-## Expanding the ESLint configuration
+### Notes
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+For the purposes of this demo (and easier setup) the app uses a hardcoded endpoint which is configured to match the requested payload. This will save you the need to create an `.env` file if you decide to test it locally.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### What was done with AI in agent mode (low risk, big wins) 💪🤖
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- the contents of the unit test files
+- refactoring the code into separate files for most of the components
+- the additional code needed to make choices list drag-and-drop-able (to save hours of going through the react-dnd documentation). Outside of the code for drag and drop, the functionality for adding/removing choices was **not** done with an agent
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### What was done with AI outside agent mode (ChatGPT/Copilot) 🤖👀
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- the initial version of the `toCamelCase` utility function (which was later updated manually to cover a missed unit test case)
+- the SVG code for the `Spinner` component
+- alias setup (`./src/*` -> `@/*`)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### What was done by a human (me) 🤓
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- vite setup
+- dependencies install
+- folder structure
+- UI "redesign"
+- ... pretty much everything else in the code that was not mentioned in the AI sections above
