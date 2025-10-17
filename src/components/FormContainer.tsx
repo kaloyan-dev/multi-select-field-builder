@@ -1,4 +1,4 @@
-import { FormRow, Icon } from "@/components";
+import { FormRow, Icon, Spinner } from "@/components";
 import { FormContainerProps } from "@/types";
 
 const FormContainer: React.FC<FormContainerProps> = ({
@@ -7,6 +7,7 @@ const FormContainer: React.FC<FormContainerProps> = ({
   validationErrors,
   onSubmit,
   onReset,
+  loading = false,
 }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,9 +29,11 @@ const FormContainer: React.FC<FormContainerProps> = ({
         <div className="flex space-x-4 justify-start items-center">
           <button
             type="submit"
-            className="px-4 py-2 bg-gray-500 text-white flex items-center justify-start"
+            disabled={loading}
+            className="px-4 py-2 bg-gray-500 disabled:opacity-50 text-white flex items-center justify-start"
           >
-            <Icon type="save" className="inline size-4 mr-2" />
+            {!loading && <Icon type="save" className="inline size-4 mr-2" />}
+            {loading && <Spinner />}
             Save Changes
           </button>
           <span>Or</span>

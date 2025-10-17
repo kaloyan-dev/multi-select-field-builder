@@ -30,6 +30,7 @@ type FormContainerProps = {
   validationErrors: string[];
   onSubmit: (formData: FormData) => void;
   onReset: () => void;
+  loading: boolean;
 };
 
 type FormRowProps = {

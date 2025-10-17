@@ -5,6 +5,7 @@ import FormContainer from "@/components/FormContainer";
 import FormTitle from "@/components/FormTitle";
 import FormRow from "@/components/FormRow";
 import Icon from "@/components/Icon";
+import Spinner from "@/components/Spinner";
 
 export {
   ChoiceRow,
@@ -14,4 +15,5 @@ export {
   FormTitle,
   Icon,
   FormRow,
+  Spinner,
 };

@@ -14,6 +14,7 @@ const FieldBuilderForm = ({ title }: FormBuilderFormProps) => {
     storageData?.alpha ? "alphabetical" : "custom"
   );
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     storageSet("fieldBuilderFormData", {
@@ -34,12 +35,13 @@ const FieldBuilderForm = ({ title }: FormBuilderFormProps) => {
   }) => {
     const errors: string[] = [];
 
+    // Validates if label is not empty
     if (!formData.label.trim()) {
       errors.push("Label is required.");
     }
 
-    const choicesToLowerCase = formData.choices.map((c) =>
-      c.trim().toLowerCase()
+    const choicesToLowerCase = formData.choices.map((choice) =>
+      choice.trim().toLowerCase()
     );
     const choiceSet = new Set(choicesToLowerCase);
 
@@ -49,7 +51,7 @@ const FieldBuilderForm = ({ title }: FormBuilderFormProps) => {
 
     if (
       formData.choices.length === 0 ||
-      formData.choices.some((c) => !c.trim())
+      formData.choices.some((choice) => !choice.trim())
     ) {
       errors.push("Choices cannot be empty.");
     }
@@ -103,6 +105,8 @@ const FieldBuilderForm = ({ title }: FormBuilderFormProps) => {
     choices: string[];
     displayAlpha: boolean;
   }) => {
+    setLoading(true);
+
     try {
       console.log("Post data:", data);
 
@@ -121,6 +125,8 @@ const FieldBuilderForm = ({ title }: FormBuilderFormProps) => {
       console.log("MockAPI Response:", result);
     } catch (error) {
       console.error("Error posting data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -132,6 +138,7 @@ const FieldBuilderForm = ({ title }: FormBuilderFormProps) => {
         validationErrors={validationErrors}
         onSubmit={handleSubmit}
         onReset={handleReset}
+        loading={loading}
       >
         <FormRow label="Label">
           <input
